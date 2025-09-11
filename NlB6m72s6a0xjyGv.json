@@ -1,0 +1,295 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get all members",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get all members": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Insert or update rows in a table without updating name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert or update rows in a table without updating name": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-03T21:40:12.235Z",
+  "id": "NlB6m72s6a0xjyGv",
+  "isArchived": false,
+  "meta": null,
+  "name": "Update SQL with ClickUp IDs based on emails",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -944,
+        -112
+      ],
+      "id": "7f9847a4-8f40-41f5-8022-c64b95ed1e67",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://api.clickup.com/api/v2/team/90131880769",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "clickUpOAuth2Api",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -736,
+        -112
+      ],
+      "id": "294d2c85-6dd6-451b-aab4-059cef7badc3",
+      "name": "Get all members"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Read all incoming items\nconst inputItems = $input.all();\nconst out = [];\n\nfor (const { json } of inputItems) {\n  const team = json.team ?? {};\n  const members = Array.isArray(team.members) ? team.members : [];\n\n  for (const m of members) {\n    const u = m.user ?? {};\n    out.push({\n      json: {\n        clickUpId: u.id ?? null,\n        name: u.username ?? null,\n        email: u.email ?? null,\n      }\n    });\n  }\n}\n\nreturn out;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -528,
+        -112
+      ],
+      "id": "58060718-a591-4825-a955-81cca4fa7654",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -320,
+        -112
+      ],
+      "id": "f9f44b6c-457e-4661-896e-3fdd005e90b5",
+      "name": "Loop Over Items",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "select count(1) as \"Result\" from \"Members\" where \"ClickUpID\"={{ $json.clickUpId }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -112,
+        176
+      ],
+      "id": "4cf674a7-89fa-486c-b382-24f6e12a12f0",
+      "name": "Check if ClickUpID already exists",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "e94a9284-d9b0-466d-85cb-fccc258b729d",
+              "leftValue": "={{ $json.Result }}",
+              "rightValue": "1",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        96,
+        96
+      ],
+      "id": "63c12831-680b-48a4-9f35-49389ac19219",
+      "name": "If does exist",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "Members",
+          "mode": "list",
+          "cachedResultName": "Members"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ClickUpID": "={{ $json.clickUpId }}",
+            "email": "={{ $json.email }}"
+          },
+          "matchingColumns": [
+            "email"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": false,
+              "removed": true
+            },
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "phone_number",
+              "displayName": "phone_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": false,
+              "removed": true
+            },
+            {
+              "id": "ClickUpID",
+              "displayName": "ClickUpID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -48,
+        -128
+      ],
+      "id": "1185fe96-6432-4dbf-8caa-03f5419ec147",
+      "name": "Insert or update rows in a table without updating name"
+    }
+  ],
+  "origin": "n8n",
+  "pinData": {},
+  "repo": {
+    "owner": "operationspolyai",
+    "name": "n8n-backup"
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-03T21:40:12.238Z",
+      "updatedAt": "2025-09-03T21:40:12.238Z",
+      "role": "workflow:owner",
+      "workflowId": "NlB6m72s6a0xjyGv",
+      "projectId": "NulObFSfFSWs7ssm"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-03T21:40:17.000Z",
+  "versionId": "7db6d828-6ef9-4ab6-be81-bcd846724de2"
+}
