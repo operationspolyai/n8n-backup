@@ -1,0 +1,305 @@
+{
+  "active": false,
+  "connections": {
+    "Daily Schedule": {
+      "main": [
+        [
+          {
+            "node": "List tables1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List tables": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Split to single items",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "List tables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List tables1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-03T21:41:10.219Z",
+  "id": "Ts6LDWWEinzAHT78",
+  "isArchived": false,
+  "meta": null,
+  "name": "Daily SQL Backup",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 24
+            }
+          ]
+        }
+      },
+      "id": "a546a78c-f2d5-4d94-ac9b-25e64a2c2459",
+      "name": "Daily Schedule",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        -224,
+        64
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $json.table_name }}"
+        },
+        "returnAll": true,
+        "options": {}
+      },
+      "id": "66f35be5-5d91-4547-9bc8-131a1f976bd7",
+      "name": "List tables",
+      "type": "n8n-nodes-base.postgres",
+      "position": [
+        544,
+        224
+      ],
+      "typeVersion": 2.6
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "e8140e82-0046-426a-af04-161c58f30750",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "position": [
+        176,
+        64
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all();"
+      },
+      "id": "d72aecda-4958-4784-b661-1da1ba905fdf",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        336,
+        224
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "information_schema",
+          "cachedResultName": "information_schema"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "list",
+          "value": "tables",
+          "cachedResultName": "tables"
+        },
+        "where": {
+          "values": [
+            {
+              "column": "table_schema",
+              "value": "public"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "871f34ee-d415-48fb-a694-79eb6ebc8846",
+      "name": "List tables1",
+      "type": "n8n-nodes-base.postgres",
+      "position": [
+        -16,
+        64
+      ],
+      "typeVersion": 2.6
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "6abc0c4b-da88-4b5f-8bd4-596c256a4010",
+      "name": "Split to single items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "position": [
+        1008,
+        48
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "content": "## Get postgres table data\nReturn a list of existing tables and data in the postgres.  \nConvert them to csv",
+        "height": 547,
+        "width": 998,
+        "color": 5
+      },
+      "id": "ea613f4b-1f7c-43b4-a8c6-b9fa5d1c1422",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -80,
+        -96
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Make a list of existing files\nCreate backup if its a new table. \nUpdate backup if there is new data in the table",
+        "height": 547,
+        "width": 694,
+        "color": 7
+      },
+      "id": "43a98f41-b094-476d-8c88-99084d0916c6",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        944,
+        -96
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "![postgres table](https://articles.emp0.com/wp-content/uploads/2025/08/backup-postgres-to-github-tables.png)",
+        "height": 195,
+        "width": 374,
+        "color": 7
+      },
+      "id": "03fad793-d214-4500-ba3c-a8b5debfc88c",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        240,
+        480
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "![github backup](https://articles.emp0.com/wp-content/uploads/2025/08/backup-postgres-to-github-repo.png)",
+        "height": 259,
+        "width": 694,
+        "color": 7
+      },
+      "id": "f05e78e5-9c21-481f-9b3a-f6dba961eda4",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        944,
+        480
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "root",
+          "cachedResultName": "/ (Root folder)"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1232,
+        32
+      ],
+      "id": "2cb8f92e-4cbd-4695-b379-b45ad0336150",
+      "name": "Create folder"
+    }
+  ],
+  "origin": "n8n",
+  "pinData": {},
+  "repo": {
+    "owner": "operationspolyai",
+    "name": "n8n-backup"
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-03T21:41:10.224Z",
+      "updatedAt": "2025-09-03T21:41:10.224Z",
+      "role": "workflow:owner",
+      "workflowId": "Ts6LDWWEinzAHT78",
+      "projectId": "NulObFSfFSWs7ssm"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-03T21:41:13.000Z",
+  "versionId": "7787d9fb-9c82-4c26-b366-aadd7c273ffc"
+}
