@@ -1,0 +1,874 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get rows in sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If adding new person": {
+      "main": [
+        [
+          {
+            "node": "Add rows to Members",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Insert or update rows in a table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find department ID": {
+      "main": [
+        [
+          {
+            "node": "Add row to MemberDepartment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find role ID": {
+      "main": [
+        [
+          {
+            "node": "Add row to MemberRole",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add rows to Members": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add row to MemberRole": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Get new id of member just added",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get new id of member just added": {
+      "main": [
+        [
+          {
+            "node": "Split the list of departments",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add row to MemberDepartment": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get rows in sheets": {
+      "main": [
+        [
+          {
+            "node": "Get last row in sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get last row in sheets": {
+      "main": [
+        [
+          {
+            "node": "If adding new person",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Split the list of roles",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Find department ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split the list of departments": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split the list of roles": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Find role ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get rows in sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-03T21:36:23.532Z",
+  "id": "oNVHnI608V3ILkN6",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Add",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -2640,
+        336
+      ],
+      "id": "b74dc347-d40a-456a-b2ed-f4b9978df986",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "06b18281-7d24-4796-ac6b-f403599ebc5f",
+              "leftValue": "={{ $json['SQL ID'] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1968,
+        336
+      ],
+      "id": "e90c76bb-c20a-4eb6-a7ba-532ff1a2e992",
+      "name": "If adding new person"
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "Members",
+          "mode": "list",
+          "cachedResultName": "Members"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ClickUpID": "={{ $json.clickUpId }}",
+            "name": "={{ $json.name }}",
+            "email": "={{ $json.email }}"
+          },
+          "matchingColumns": [
+            "ClickUpID"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": false,
+              "removed": true
+            },
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "phone_number",
+              "displayName": "phone_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": false,
+              "removed": true
+            },
+            {
+              "id": "ClickUpID",
+              "displayName": "ClickUpID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -1744,
+        400
+      ],
+      "id": "babcb751-028f-4adb-9d8a-27f84b56e462",
+      "name": "Insert or update rows in a table",
+      "credentials": {
+        "postgres": {
+          "id": "ucbPPN2ixG5PoGk4",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "Department",
+          "mode": "list",
+          "cachedResultName": "Department"
+        },
+        "where": {
+          "values": [
+            {
+              "column": "departmentName",
+              "value": "={{ $json.Department.slice(3) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -624,
+        240
+      ],
+      "id": "9fd0c51a-8b3a-4537-9bd8-63315b580286",
+      "name": "Find department ID",
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "ucbPPN2ixG5PoGk4",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "Role",
+          "mode": "list",
+          "cachedResultName": "Role"
+        },
+        "where": {
+          "values": [
+            {
+              "column": "roleName",
+              "value": "={{ $json.Role }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -176,
+        -32
+      ],
+      "id": "50ea5b3a-4bac-4867-9241-7b2d217789ae",
+      "name": "Find role ID",
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "ucbPPN2ixG5PoGk4",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "Members",
+          "mode": "list",
+          "cachedResultName": "Members"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "name": "={{ $('Get rows in sheets').item.json['Full Name (first, last)'] }}",
+            "email": "={{ $('Get rows in sheets').item.json.Email }}",
+            "phone_number": "={{ $('Get rows in sheets').item.json['Phone Number'] ? $('Get rows in sheets').item.json['Phone Number'] : null }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "phone_number",
+              "displayName": "phone_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ClickUpID",
+              "displayName": "ClickUpID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -1744,
+        208
+      ],
+      "id": "6924a086-7629-4105-a914-39a727a1cf91",
+      "name": "Add rows to Members",
+      "credentials": {
+        "postgres": {
+          "id": "ucbPPN2ixG5PoGk4",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "MemberRole",
+          "mode": "list",
+          "cachedResultName": "MemberRole"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "memberID": "={{ $('Get new id of member just added').all()[0].json.id }}",
+            "roleID": "={{ $('Find role ID').item.json.id }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "memberID",
+              "displayName": "memberID",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "roleID",
+              "displayName": "roleID",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        48,
+        32
+      ],
+      "id": "10eb576e-ffbc-4483-9427-33600b00648b",
+      "name": "Add row to MemberRole",
+      "alwaysOutputData": false,
+      "credentials": {
+        "postgres": {
+          "id": "ucbPPN2ixG5PoGk4",
+          "name": "Postgres account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -1520,
+        208
+      ],
+      "id": "3ca117fd-deb6-4855-a6a1-7c66249677ce",
+      "name": "Wait",
+      "webhookId": "1aa53d4a-c3c5-4c5e-b92b-93bafc492c81"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "Members",
+          "mode": "list",
+          "cachedResultName": "Members"
+        },
+        "where": {
+          "values": [
+            {
+              "column": "email",
+              "value": "={{ $('Get rows in sheets').item.json.Email }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -1296,
+        208
+      ],
+      "id": "c1bd9bd4-b12e-4d32-af49-df8cdcde37cb",
+      "name": "Get new id of member just added",
+      "alwaysOutputData": false,
+      "credentials": {
+        "postgres": {
+          "id": "ucbPPN2ixG5PoGk4",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "MemberDepartment",
+          "mode": "list",
+          "cachedResultName": "MemberDepartment"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "memberID": "={{ $('Get new id of member just added').all()[0].json.id }}",
+            "departmentID": "={{ $('Find department ID').item.json.id }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "memberID",
+              "displayName": "memberID",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "departmentID",
+              "displayName": "departmentID",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -400,
+        256
+      ],
+      "id": "f9fdd7b9-c3bb-48d1-ac5a-fb0a9bfd1687",
+      "name": "Add row to MemberDepartment",
+      "alwaysOutputData": false,
+      "credentials": {
+        "postgres": {
+          "id": "ucbPPN2ixG5PoGk4",
+          "name": "Postgres account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1kQ_SjgxAaC6KRbzLnzMa5DJPcJGjE5YxVE0wcwyLCkM",
+          "mode": "list",
+          "cachedResultName": "Add/update member to club (Responses)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kQ_SjgxAaC6KRbzLnzMa5DJPcJGjE5YxVE0wcwyLCkM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 707898479,
+          "mode": "list",
+          "cachedResultName": "Form Responses 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kQ_SjgxAaC6KRbzLnzMa5DJPcJGjE5YxVE0wcwyLCkM/edit#gid=707898479"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -2416,
+        336
+      ],
+      "id": "e444615a-f053-4729-ab62-c68e5a525a81",
+      "name": "Get rows in sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "j2ZqaOzHSdIL6aZC",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "keep": "lastItems"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        -2192,
+        336
+      ],
+      "id": "97ece000-df64-4570-819e-30c9c2346fd1",
+      "name": "Get last row in sheets"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -848,
+        208
+      ],
+      "id": "0ffb2868-2243-4ef0-8c10-959bf49062a2",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pull the Department field from the earlier node\nconst deptString = $('Get last row in sheets').first().json.Department || \"\";\n\n// Split string into an array and trim each entry\nconst departments = deptString.split(',').map(d => d.trim());\n\n// Return one item per department\nreturn departments.map(d => ({\n  json: { Department: d }\n}));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1072,
+        208
+      ],
+      "id": "996f1540-12ca-45bd-a1a1-5cdf2f09ff7d",
+      "name": "Split the list of departments"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pull the Role field from the earlier node\nconst roleString = $('Get last row in sheets').first().json.Role || \"\";\n\n// Split string into an array and trim each entry\nconst roles = roleString.split(',').map(r => r.trim());\n\n// Return one item per role\nreturn roles.map(r => ({\n  json: { Role: r }\n}));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -624,
+        32
+      ],
+      "id": "5baf1937-8f91-4cae-80ef-1e4675d103c2",
+      "name": "Split the list of roles"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -400,
+        32
+      ],
+      "id": "321d4136-70e5-4326-b90b-feb72e13c776",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1kQ_SjgxAaC6KRbzLnzMa5DJPcJGjE5YxVE0wcwyLCkM",
+          "mode": "list",
+          "cachedResultName": "Add/update member to club (Responses)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kQ_SjgxAaC6KRbzLnzMa5DJPcJGjE5YxVE0wcwyLCkM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 707898479,
+          "mode": "list",
+          "cachedResultName": "Form Responses 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kQ_SjgxAaC6KRbzLnzMa5DJPcJGjE5YxVE0wcwyLCkM/edit#gid=707898479"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -2624,
+        160
+      ],
+      "id": "c8d84a6a-081f-49f4-8b04-2bce50335a02",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "0KHV8kj7KmWYKLWd",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    }
+  ],
+  "origin": "n8n",
+  "pinData": {},
+  "repo": {
+    "owner": "operationspolyai",
+    "name": "n8n-backup"
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-03T21:36:23.536Z",
+      "updatedAt": "2025-09-03T21:36:23.536Z",
+      "role": "workflow:owner",
+      "workflowId": "oNVHnI608V3ILkN6",
+      "projectId": "NulObFSfFSWs7ssm"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-05T17:26:36.000Z",
+  "versionId": "7b52e477-76d0-4cbe-882b-c9c3030d4aa0"
+}
