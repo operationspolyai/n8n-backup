@@ -1,0 +1,135 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Join tables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Join tables": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Download button in this node",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-03T21:40:41.721Z",
+  "id": "XeXh6eo0AMesNXs4",
+  "isArchived": false,
+  "meta": null,
+  "name": "Visualize SQL data as CSV",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        96,
+        -80
+      ],
+      "id": "4a63d04a-f9b9-49a2-bf4a-868446c19373",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \n    m.\"name\",\n    m.\"email\",\n    m.\"phone_number\",\n    d.\"departmentName\",\n    r.\"roleName\"\nFROM \"Members\" m\nLEFT JOIN \"MemberRole\" mr \n  ON m.\"id\" = mr.\"memberID\"\nLEFT JOIN \"Role\" r \n  ON r.\"id\" = mr.\"roleID\"\nLEFT JOIN \"MemberDepartment\" md \n  ON m.\"id\" = md.\"memberID\"\nLEFT JOIN \"Department\" d \n  ON d.\"id\" = md.\"departmentID\";",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        304,
+        -80
+      ],
+      "id": "0d6725d0-d876-4c2f-aebc-e9b35b41da4f",
+      "name": "Join tables"
+    },
+    {
+      "parameters": {
+        "operation": "xlsx",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        512,
+        -80
+      ],
+      "id": "3b7ca9a7-2cdd-430e-8e8b-35fb7a13571c",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "respondWith": "binary",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+              },
+              {
+                "name": "Content-Disposition",
+                "value": "attachment; filename=\"Export.xlsx"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        720,
+        -80
+      ],
+      "id": "f39fdc00-d242-4d89-859a-0f90f7e97535",
+      "name": "Download button in this node"
+    }
+  ],
+  "origin": "n8n",
+  "pinData": {},
+  "repo": {
+    "owner": "operationspolyai",
+    "name": "n8n-backup"
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-03T21:40:41.724Z",
+      "updatedAt": "2025-09-03T21:40:41.724Z",
+      "role": "workflow:owner",
+      "workflowId": "XeXh6eo0AMesNXs4",
+      "projectId": "NulObFSfFSWs7ssm"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-03T21:40:57.000Z",
+  "versionId": "6c36584a-9856-47c1-b8c0-88948d871ea0"
+}
