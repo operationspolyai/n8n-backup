@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "When clicking ‘Execute workflow’": {
       "main": [
@@ -199,7 +199,7 @@
   "meta": {
     "templateCredsSetupCompleted": true
   },
-  "name": "Add",
+  "name": "Add Member",
   "nodes": [
     {
       "parameters": {},
@@ -866,9 +866,15 @@
       "projectId": "NulObFSfFSWs7ssm"
     }
   ],
-  "staticData": null,
+  "staticData": {
+    "node:Google Sheets Trigger": {
+      "documentId": "1kQ_SjgxAaC6KRbzLnzMa5DJPcJGjE5YxVE0wcwyLCkM",
+      "sheetId": 707898479,
+      "lastIndexChecked": 11
+    }
+  },
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2025-09-05T17:26:36.000Z",
-  "versionId": "7b52e477-76d0-4cbe-882b-c9c3030d4aa0"
+  "triggerCount": 1,
+  "updatedAt": "2025-09-12T01:37:00.000Z",
+  "versionId": "3fe382a1-7465-4299-ab5b-e433e745544a"
 }
