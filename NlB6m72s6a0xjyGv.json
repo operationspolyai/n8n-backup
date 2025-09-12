@@ -266,7 +266,13 @@
         -128
       ],
       "id": "1185fe96-6432-4dbf-8caa-03f5419ec147",
-      "name": "Insert or update rows in a table without updating name"
+      "name": "Insert or update rows in a table without updating name",
+      "credentials": {
+        "postgres": {
+          "id": "ucbPPN2ixG5PoGk4",
+          "name": "Postgres account"
+        }
+      }
     }
   ],
   "origin": "n8n",
@@ -290,6 +296,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-03T21:40:17.000Z",
-  "versionId": "7db6d828-6ef9-4ab6-be81-bcd846724de2"
+  "updatedAt": "2025-09-11T22:33:43.000Z",
+  "versionId": "e90065a4-518a-4c85-b5ba-ced142cada47"
 }
