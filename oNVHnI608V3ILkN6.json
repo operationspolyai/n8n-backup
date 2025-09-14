@@ -181,7 +181,7 @@
         ]
       ]
     },
-    "Google Sheets Trigger": {
+    "Webhook": {
       "main": [
         [
           {
@@ -206,8 +206,8 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -2640,
-        336
+        -2656,
+        400
       ],
       "id": "b74dc347-d40a-456a-b2ed-f4b9978df986",
       "name": "When clicking ‘Execute workflow’"
@@ -240,8 +240,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -1968,
-        336
+        -1984,
+        328
       ],
       "id": "e90c76bb-c20a-4eb6-a7ba-532ff1a2e992",
       "name": "If adding new person"
@@ -338,7 +338,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        -1744,
+        -1760,
         400
       ],
       "id": "babcb751-028f-4adb-9d8a-27f84b56e462",
@@ -377,8 +377,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        -624,
-        240
+        -640,
+        232
       ],
       "id": "9fd0c51a-8b3a-4537-9bd8-63315b580286",
       "name": "Find department ID",
@@ -417,7 +417,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        -176,
+        -192,
         -32
       ],
       "id": "50ea5b3a-4bac-4867-9241-7b2d217789ae",
@@ -520,7 +520,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        -1744,
+        -1760,
         208
       ],
       "id": "6924a086-7629-4105-a914-39a727a1cf91",
@@ -580,8 +580,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        48,
-        32
+        32,
+        40
       ],
       "id": "10eb576e-ffbc-4483-9427-33600b00648b",
       "name": "Add row to MemberRole",
@@ -599,7 +599,7 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        -1520,
+        -1536,
         208
       ],
       "id": "3ca117fd-deb6-4855-a6a1-7c66249677ce",
@@ -633,7 +633,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        -1296,
+        -1312,
         208
       ],
       "id": "c1bd9bd4-b12e-4d32-af49-df8cdcde37cb",
@@ -694,7 +694,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        -400,
+        -416,
         256
       ],
       "id": "f9fdd7b9-c3bb-48d1-ac5a-fb0a9bfd1687",
@@ -729,8 +729,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        -2416,
-        336
+        -2432,
+        328
       ],
       "id": "e444615a-f053-4729-ab62-c68e5a525a81",
       "name": "Get rows in sheets",
@@ -748,8 +748,8 @@
       "type": "n8n-nodes-base.limit",
       "typeVersion": 1,
       "position": [
-        -2192,
-        336
+        -2208,
+        328
       ],
       "id": "97ece000-df64-4570-819e-30c9c2346fd1",
       "name": "Get last row in sheets"
@@ -761,7 +761,7 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        -848,
+        -864,
         208
       ],
       "id": "0ffb2868-2243-4ef0-8c10-959bf49062a2",
@@ -774,7 +774,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1072,
+        -1088,
         208
       ],
       "id": "996f1540-12ca-45bd-a1a1-5cdf2f09ff7d",
@@ -787,8 +787,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -624,
-        32
+        -640,
+        40
       ],
       "id": "5baf1937-8f91-4cae-80ef-1e4675d103c2",
       "name": "Split the list of roles"
@@ -800,52 +800,27 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        -400,
-        32
+        -416,
+        40
       ],
       "id": "321d4136-70e5-4326-b90b-feb72e13c776",
       "name": "Loop Over Items1"
     },
     {
       "parameters": {
-        "pollTimes": {
-          "item": [
-            {
-              "mode": "everyMinute"
-            }
-          ]
-        },
-        "documentId": {
-          "__rl": true,
-          "value": "1kQ_SjgxAaC6KRbzLnzMa5DJPcJGjE5YxVE0wcwyLCkM",
-          "mode": "list",
-          "cachedResultName": "Add/update member to club (Responses)",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kQ_SjgxAaC6KRbzLnzMa5DJPcJGjE5YxVE0wcwyLCkM/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": 707898479,
-          "mode": "list",
-          "cachedResultName": "Form Responses 1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kQ_SjgxAaC6KRbzLnzMa5DJPcJGjE5YxVE0wcwyLCkM/edit#gid=707898479"
-        },
-        "event": "rowAdded",
+        "httpMethod": "POST",
+        "path": "c3fd5a29-3e4a-435c-834d-3166c0f425ad",
         "options": {}
       },
-      "type": "n8n-nodes-base.googleSheetsTrigger",
-      "typeVersion": 1,
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
       "position": [
-        -2624,
-        160
+        -2656,
+        208
       ],
-      "id": "c8d84a6a-081f-49f4-8b04-2bce50335a02",
-      "name": "Google Sheets Trigger",
-      "credentials": {
-        "googleSheetsTriggerOAuth2Api": {
-          "id": "0KHV8kj7KmWYKLWd",
-          "name": "Google Sheets Trigger account"
-        }
-      }
+      "id": "71ff8f05-2e9d-4515-b9a9-7616c26b9881",
+      "name": "Webhook",
+      "webhookId": "c3fd5a29-3e4a-435c-834d-3166c0f425ad"
     }
   ],
   "origin": "n8n",
@@ -870,11 +845,11 @@
     "node:Google Sheets Trigger": {
       "documentId": "1kQ_SjgxAaC6KRbzLnzMa5DJPcJGjE5YxVE0wcwyLCkM",
       "sheetId": 707898479,
-      "lastIndexChecked": 11
+      "lastIndexChecked": 14
     }
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-09-12T01:37:00.000Z",
-  "versionId": "3fe382a1-7465-4299-ab5b-e433e745544a"
+  "updatedAt": "2025-09-14T21:36:09.000Z",
+  "versionId": "429cba7b-2873-4d42-9c44-7a07c93c4cc0"
 }
