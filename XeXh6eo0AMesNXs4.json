@@ -16,30 +16,7 @@
       "main": [
         [
           {
-            "node": "Loop Over Items",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Loop Over Items": {
-      "main": [
-        [],
-        [
-          {
-            "node": "Wait",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Append row in sheet": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items",
+            "node": "Upload Data",
             "type": "main",
             "index": 0
           }
@@ -51,17 +28,6 @@
         [
           {
             "node": "Join tables",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Wait": {
-      "main": [
-        [
-          {
-            "node": "Append row in sheet",
             "type": "main",
             "index": 0
           }
@@ -108,6 +74,69 @@
           "name": "Postgres account"
         }
       }
+    },
+    {
+      "parameters": {
+        "operation": "clear",
+        "documentId": {
+          "__rl": true,
+          "value": "1d8Iv0yEe44K2Yoj1n3nuC3niY__k0M0s0p4V1fvre5g",
+          "mode": "list",
+          "cachedResultName": "SQL Database View",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1d8Iv0yEe44K2Yoj1n3nuC3niY__k0M0s0p4V1fvre5g/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Members",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1d8Iv0yEe44K2Yoj1n3nuC3niY__k0M0s0p4V1fvre5g/edit#gid=0"
+        },
+        "clear": "specificRows",
+        "startIndex": 2,
+        "rowsToDelete": 1000
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        592,
+        -80
+      ],
+      "id": "c53c8a9f-7427-4547-8c3d-34c6df1d3da6",
+      "name": "Clear sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "j2ZqaOzHSdIL6aZC",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        112,
+        160
+      ],
+      "id": "3aa4f30b-7449-413d-8fe9-d7f4032a87c0",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "1ca6dc0e-b49e-4a64-8d2f-ab96e6c49259",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        48,
+        -112
+      ],
+      "id": "f802468e-cfe6-4edb-8eb2-663cf93f0cd6",
+      "name": "Webhook",
+      "webhookId": "1ca6dc0e-b49e-4a64-8d2f-ab96e6c49259"
     },
     {
       "parameters": {
@@ -209,11 +238,11 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1392,
-        -16
+        864,
+        -64
       ],
-      "id": "3fd54904-c13e-4f40-a8e5-a13b3f2ab923",
-      "name": "Append row in sheet",
+      "id": "592bea98-ecf0-4a40-84da-9b7413d8ffc3",
+      "name": "Upload Data",
       "retryOnFail": true,
       "waitBetweenTries": 5000,
       "maxTries": 2,
@@ -223,96 +252,6 @@
           "name": "Google Sheets account"
         }
       }
-    },
-    {
-      "parameters": {
-        "operation": "clear",
-        "documentId": {
-          "__rl": true,
-          "value": "1d8Iv0yEe44K2Yoj1n3nuC3niY__k0M0s0p4V1fvre5g",
-          "mode": "list",
-          "cachedResultName": "SQL Database View",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1d8Iv0yEe44K2Yoj1n3nuC3niY__k0M0s0p4V1fvre5g/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "gid=0",
-          "mode": "list",
-          "cachedResultName": "Members",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1d8Iv0yEe44K2Yoj1n3nuC3niY__k0M0s0p4V1fvre5g/edit#gid=0"
-        },
-        "clear": "specificRows",
-        "startIndex": 2,
-        "rowsToDelete": 1000
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.7,
-      "position": [
-        592,
-        -80
-      ],
-      "id": "c53c8a9f-7427-4547-8c3d-34c6df1d3da6",
-      "name": "Clear sheet",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "j2ZqaOzHSdIL6aZC",
-          "name": "Google Sheets account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "type": "n8n-nodes-base.splitInBatches",
-      "typeVersion": 3,
-      "position": [
-        848,
-        -80
-      ],
-      "id": "b2ae49a8-1d69-486b-a0a6-99447c248262",
-      "name": "Loop Over Items"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1,
-      "position": [
-        112,
-        160
-      ],
-      "id": "3aa4f30b-7449-413d-8fe9-d7f4032a87c0",
-      "name": "When clicking ‘Execute workflow’"
-    },
-    {
-      "parameters": {
-        "amount": 2
-      },
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
-      "position": [
-        1136,
-        -64
-      ],
-      "id": "bf0c7a6e-7bc6-4325-8e90-709ffd2cb5be",
-      "name": "Wait",
-      "webhookId": "64c80db1-bcc0-4a3a-aec3-7d3ceb1fa30e"
-    },
-    {
-      "parameters": {
-        "httpMethod": "POST",
-        "path": "1ca6dc0e-b49e-4a64-8d2f-ab96e6c49259",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 2.1,
-      "position": [
-        48,
-        -112
-      ],
-      "id": "f802468e-cfe6-4edb-8eb2-663cf93f0cd6",
-      "name": "Webhook",
-      "webhookId": "1ca6dc0e-b49e-4a64-8d2f-ab96e6c49259"
     }
   ],
   "origin": "n8n",
@@ -343,6 +282,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-09-12T02:26:07.000Z",
-  "versionId": "19d3f03b-bba5-48cf-8c9f-1289caf065e6"
+  "updatedAt": "2025-09-14T20:12:17.000Z",
+  "versionId": "a802616a-7db2-4867-ae42-94a8a207d563"
 }
