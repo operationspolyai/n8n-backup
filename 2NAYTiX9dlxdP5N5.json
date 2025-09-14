@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "Get a task": {
       "main": [
@@ -45,7 +45,7 @@
         ],
         [
           {
-            "node": "Get ClickUp ID of VP of Operations",
+            "node": "Update if creator is the VP of targeted department",
             "type": "main",
             "index": 0
           }
@@ -127,13 +127,7 @@
     },
     "Update permissions assuming VP is targetted department": {
       "main": [
-        [
-          {
-            "node": "Get name of targetted department",
-            "type": "main",
-            "index": 0
-          }
-        ],
+        [],
         [
           {
             "node": "If VP of operations is creating the task in their department1",
@@ -156,24 +150,12 @@
     },
     "Update permissions assuming VP made it in their own department": {
       "main": [
-        [
-          {
-            "node": "Get name of targetted department",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Update permissions assuming VP made it NOT in their own department": {
       "main": [
-        [
-          {
-            "node": "Get name of targetted department",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "If VP of operations is creating the task in their department1": {
@@ -219,12 +201,43 @@
           }
         ]
       ]
+    },
+    "Update if creator is the VP of targeted department": {
+      "main": [
+        [
+          {
+            "node": "Get name of targetted department",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update if president is making task",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update if president is making task": {
+      "main": [
+        [
+          {
+            "node": "Get name of targetted department",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-09-03T21:34:47.114Z",
   "id": "2NAYTiX9dlxdP5N5",
   "isArchived": false,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "Assign Other Tasks - Private Task",
   "nodes": [
     {
@@ -237,10 +250,16 @@
       "typeVersion": 1,
       "position": [
         -2432,
-        64
+        48
       ],
       "id": "2de2de07-d88a-4d8e-9ef3-3224310aee59",
-      "name": "Get a task"
+      "name": "Get a task",
+      "credentials": {
+        "clickUpOAuth2Api": {
+          "id": "B6uymUDP8hJrRXiz",
+          "name": "ClickUp account 2"
+        }
+      }
     },
     {
       "parameters": {
@@ -271,7 +290,7 @@
       "typeVersion": 2.2,
       "position": [
         -1984,
-        64
+        48
       ],
       "id": "3802da03-6cf3-432a-ae84-ee98bcd40f36",
       "name": "If not a subtask"
@@ -286,10 +305,16 @@
       "typeVersion": 2.6,
       "position": [
         -1536,
-        64
+        48
       ],
       "id": "6b5b007b-0bc0-4171-ae50-ed9008b19aae",
-      "name": "Get ClickUpID of president"
+      "name": "Get ClickUpID of president",
+      "credentials": {
+        "postgres": {
+          "id": "ucbPPN2ixG5PoGk4",
+          "name": "Postgres account"
+        }
+      }
     },
     {
       "parameters": {
@@ -306,12 +331,18 @@
       "typeVersion": 4.2,
       "position": [
         -1088,
-        64
+        48
       ],
       "id": "75bc9639-0872-4508-8e77-242d43baae76",
       "name": "Update permissions",
       "alwaysOutputData": false,
       "retryOnFail": false,
+      "credentials": {
+        "clickUpOAuth2Api": {
+          "id": "B6uymUDP8hJrRXiz",
+          "name": "ClickUp account 2"
+        }
+      },
       "onError": "continueErrorOutput"
     },
     {
@@ -324,10 +355,16 @@
       "typeVersion": 2.6,
       "position": [
         -1312,
-        64
+        48
       ],
       "id": "9806b615-4641-4901-9f25-d9cd1695b323",
-      "name": "Get ClickUp ID of Vice President"
+      "name": "Get ClickUp ID of Vice President",
+      "credentials": {
+        "postgres": {
+          "id": "ucbPPN2ixG5PoGk4",
+          "name": "Postgres account"
+        }
+      }
     },
     {
       "parameters": {
@@ -342,11 +379,17 @@
       "typeVersion": 1,
       "position": [
         -2656,
-        64
+        48
       ],
       "id": "125c009e-9f29-40fd-80f6-c5fda370dae5",
       "name": "ClickUp Trigger",
-      "webhookId": "a0082970-0ae6-4e9b-a442-dae883a73c77"
+      "webhookId": "a0082970-0ae6-4e9b-a442-dae883a73c77",
+      "credentials": {
+        "clickUpOAuth2Api": {
+          "id": "B6uymUDP8hJrRXiz",
+          "name": "ClickUp account 2"
+        }
+      }
     },
     {
       "parameters": {
@@ -377,7 +420,7 @@
       "typeVersion": 2.2,
       "position": [
         -2208,
-        64
+        48
       ],
       "id": "29389e15-e64c-4686-b1d2-924d6a4be4b8",
       "name": "If task is in 📬Assigner Autre Section"
@@ -392,10 +435,16 @@
       "typeVersion": 2.6,
       "position": [
         -1760,
-        64
+        48
       ],
       "id": "74a4adc5-2eaf-471e-9a6c-c0729ff69ad6",
-      "name": "Find ID of the department"
+      "name": "Find ID of the department",
+      "credentials": {
+        "postgres": {
+          "id": "ucbPPN2ixG5PoGk4",
+          "name": "Postgres account"
+        }
+      }
     },
     {
       "parameters": {
@@ -406,8 +455,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        -864,
-        -16
+        -2656,
+        512
       ],
       "id": "7699224e-8173-49a3-90e7-853197fe51a3",
       "name": "Get ClickUp ID of VP of Operations",
@@ -447,8 +496,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -640,
-        -16
+        -2432,
+        512
       ],
       "id": "1dd9080f-0752-4204-9642-81c7977ee1ca",
       "name": "If VP of operations is vice president of task"
@@ -467,13 +516,19 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -416,
-        -80
+        -2208,
+        416
       ],
       "id": "b80a3b7f-6497-4976-a5f1-c341c4f48d23",
       "name": "Update permissions assuming VP is targetted department",
       "alwaysOutputData": false,
       "retryOnFail": false,
+      "credentials": {
+        "clickUpOAuth2Api": {
+          "id": "B6uymUDP8hJrRXiz",
+          "name": "ClickUp account 2"
+        }
+      },
       "onError": "continueErrorOutput"
     },
     {
@@ -514,8 +569,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -192,
-        128
+        -2208,
+        608
       ],
       "id": "4095df0f-2cd9-4782-ac0a-13c5cb4443e0",
       "name": "If VP of operations is creating the task not in their department"
@@ -534,13 +589,19 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        32,
-        -160
+        -1760,
+        416
       ],
       "id": "0ed255a0-217e-4524-b297-00ab3476af5d",
       "name": "Update permissions assuming VP made it in their own department",
       "alwaysOutputData": false,
       "retryOnFail": false,
+      "credentials": {
+        "clickUpOAuth2Api": {
+          "id": "B6uymUDP8hJrRXiz",
+          "name": "ClickUp account 2"
+        }
+      },
       "onError": "continueErrorOutput"
     },
     {
@@ -557,13 +618,19 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        32,
-        128
+        -1984,
+        608
       ],
       "id": "162fc815-aa96-4124-a673-a1f1ff291009",
       "name": "Update permissions assuming VP made it NOT in their own department",
       "alwaysOutputData": false,
       "retryOnFail": false,
+      "credentials": {
+        "clickUpOAuth2Api": {
+          "id": "B6uymUDP8hJrRXiz",
+          "name": "ClickUp account 2"
+        }
+      },
       "onError": "continueErrorOutput"
     },
     {
@@ -604,8 +671,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -192,
-        -160
+        -1984,
+        416
       ],
       "id": "98262de4-6563-4765-90ef-891af1736b18",
       "name": "If VP of operations is creating the task in their department1"
@@ -624,11 +691,17 @@
       "type": "n8n-nodes-base.clickUp",
       "typeVersion": 1,
       "position": [
-        688,
-        64
+        32,
+        48
       ],
       "id": "e33a921b-f1dc-4b87-9234-382f87f6a75d",
-      "name": "Update a task"
+      "name": "Update a task",
+      "credentials": {
+        "clickUpOAuth2Api": {
+          "id": "B6uymUDP8hJrRXiz",
+          "name": "ClickUp account 2"
+        }
+      }
     },
     {
       "parameters": {
@@ -639,11 +712,17 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        288,
-        64
+        -416,
+        48
       ],
       "id": "78f33673-3b0f-46cd-abf7-3baee04d1afa",
-      "name": "Get name of targetted department"
+      "name": "Get name of targetted department",
+      "credentials": {
+        "postgres": {
+          "id": "ucbPPN2ixG5PoGk4",
+          "name": "Postgres account"
+        }
+      }
     },
     {
       "parameters": {
@@ -654,11 +733,17 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        464,
-        64
+        -192,
+        48
       ],
       "id": "8bee0116-9eb9-4941-822f-bb274dfb8136",
-      "name": "Get name of VP"
+      "name": "Get name of VP",
+      "credentials": {
+        "postgres": {
+          "id": "ucbPPN2ixG5PoGk4",
+          "name": "Postgres account"
+        }
+      }
     },
     {
       "parameters": {
@@ -671,11 +756,75 @@
       "type": "n8n-nodes-base.clickUp",
       "typeVersion": 1,
       "position": [
-        896,
-        64
+        256,
+        48
       ],
       "id": "9eb6adc6-6b6b-4561-bb41-ca5e6a215c55",
-      "name": "Add a task tag"
+      "name": "Add a task tag",
+      "credentials": {
+        "clickUpOAuth2Api": {
+          "id": "B6uymUDP8hJrRXiz",
+          "name": "ClickUp account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://api.clickup.com/api/v3/workspaces/{{ $('Get a task').item.json.team_id }}/task/{{ $('Get a task').item.json.id }}/acls",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "clickUpOAuth2Api",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"entries\": [\n    {\n      \"id\": \"{{ $('Get ClickUpID of president').item.json.PresidentClickUpID }}\",\n      \"kind\": \"user\",\n      \"permission_level\": 5\n    },\n    {\n      \"id\": \"{{ $json.VicePresidentClickUpID }}\",\n      \"kind\": \"user\",\n      \"permission_level\": 5\n    }\n  ],\n  \"private\": true\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -864,
+        120
+      ],
+      "id": "25c37f91-d682-46cf-b1d2-f9924a12293e",
+      "name": "Update if creator is the VP of targeted department",
+      "alwaysOutputData": false,
+      "retryOnFail": false,
+      "credentials": {
+        "clickUpOAuth2Api": {
+          "id": "B6uymUDP8hJrRXiz",
+          "name": "ClickUp account 2"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://api.clickup.com/api/v3/workspaces/{{ $('Get a task').item.json.team_id }}/task/{{ $('Get a task').item.json.id }}/acls",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "clickUpOAuth2Api",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"entries\": [\n    {\n      \"id\": \"{{ $('Get ClickUpID of president').item.json.PresidentClickUpID }}\",\n      \"kind\": \"user\",\n      \"permission_level\": 5\n    },\n    {\n      \"id\": \"{{ $json.VicePresidentClickUpID }}\",\n      \"kind\": \"user\",\n      \"permission_level\": 5\n    }\n  ],\n  \"private\": true\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -640,
+        192
+      ],
+      "id": "c4f7cd27-5cae-4d51-bed9-506a90049348",
+      "name": "Update if president is making task",
+      "alwaysOutputData": false,
+      "retryOnFail": false,
+      "credentials": {
+        "clickUpOAuth2Api": {
+          "id": "B6uymUDP8hJrRXiz",
+          "name": "ClickUp account 2"
+        }
+      },
+      "onError": "continueErrorOutput"
     }
   ],
   "origin": "n8n",
@@ -696,9 +845,14 @@
       "projectId": "NulObFSfFSWs7ssm"
     }
   ],
-  "staticData": null,
+  "staticData": {
+    "node:ClickUp Trigger": {
+      "webhookId": "e6772f24-e5c3-40a3-b7d3-06dbac0fb9a2",
+      "secret": "NVR5VN2FM33FYHQMEEF1DKKGSJWF7X6OQI87FOYPOY94XPEK7YV2A37FLNWOV0WW"
+    }
+  },
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2025-09-03T21:35:58.000Z",
-  "versionId": "bf8ccc2f-e7a7-4c82-9f4c-832399cc9a5f"
+  "triggerCount": 1,
+  "updatedAt": "2025-09-14T21:26:03.000Z",
+  "versionId": "9e7b9595-9195-401f-91da-6888c5a9ad18"
 }
